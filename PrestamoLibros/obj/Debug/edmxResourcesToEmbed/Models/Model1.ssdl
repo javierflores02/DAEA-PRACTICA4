@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PrestamoLibroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AUTOR">
+    <Key>
+      <PropertyRef Name="IdAutor" />
+    </Key>
+    <Property Name="IdAutor" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" />
+    <Property Name="Nacionalidad" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="LIBRO">
+    <Key>
+      <PropertyRef Name="IdLibro" />
+    </Key>
+    <Property Name="IdLibro" Type="int" Nullable="false" />
+    <Property Name="Codigo" Type="int" />
+    <Property Name="Titulo" Type="varchar" MaxLength="100" />
+    <Property Name="ISBN" Type="varchar" MaxLength="30" />
+    <Property Name="Editorial" Type="varchar" MaxLength="60" />
+    <Property Name="NumPags" Type="tinyint" />
+    <Property Name="IdAutor" Type="int" />
+  </EntityType>
+  <EntityType Name="PRESTAMO">
+    <Key>
+      <PropertyRef Name="IdPrestamo" />
+    </Key>
+    <Property Name="IdPrestamo" Type="int" Nullable="false" />
+    <Property Name="IdLibro" Type="int" />
+    <Property Name="IdUsuario" Type="int" />
+    <Property Name="FecPrestamo" Type="datetime" />
+    <Property Name="FecDevolucion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="USUARIO">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="NumUsuario" Type="int" />
+    <Property Name="NIF" Type="varchar" MaxLength="20" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" />
+    <Property Name="Direccion" Type="varchar" MaxLength="255" />
+    <Property Name="Telefono" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <Association Name="FK__LIBRO__IdAutor__3A81B327">
+    <End Role="AUTOR" Type="Self.AUTOR" Multiplicity="0..1" />
+    <End Role="LIBRO" Type="Self.LIBRO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AUTOR">
+        <PropertyRef Name="IdAutor" />
+      </Principal>
+      <Dependent Role="LIBRO">
+        <PropertyRef Name="IdAutor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PRESTAMO__IdLibr__3F466844">
+    <End Role="LIBRO" Type="Self.LIBRO" Multiplicity="0..1" />
+    <End Role="PRESTAMO" Type="Self.PRESTAMO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LIBRO">
+        <PropertyRef Name="IdLibro" />
+      </Principal>
+      <Dependent Role="PRESTAMO">
+        <PropertyRef Name="IdLibro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PRESTAMO__IdUsua__403A8C7D">
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+    <End Role="PRESTAMO" Type="Self.PRESTAMO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="PRESTAMO">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PrestamoLibroModelStoreContainer">
+    <EntitySet Name="AUTOR" EntityType="Self.AUTOR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LIBRO" EntityType="Self.LIBRO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PRESTAMO" EntityType="Self.PRESTAMO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__LIBRO__IdAutor__3A81B327" Association="Self.FK__LIBRO__IdAutor__3A81B327">
+      <End Role="AUTOR" EntitySet="AUTOR" />
+      <End Role="LIBRO" EntitySet="LIBRO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PRESTAMO__IdLibr__3F466844" Association="Self.FK__PRESTAMO__IdLibr__3F466844">
+      <End Role="LIBRO" EntitySet="LIBRO" />
+      <End Role="PRESTAMO" EntitySet="PRESTAMO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PRESTAMO__IdUsua__403A8C7D" Association="Self.FK__PRESTAMO__IdUsua__403A8C7D">
+      <End Role="USUARIO" EntitySet="USUARIO" />
+      <End Role="PRESTAMO" EntitySet="PRESTAMO" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
