@@ -9,7 +9,7 @@ using PrestamoLibros.Models;
 
 namespace PrestamoLibros.Controllers
 {
-    public class LibroController : Controller
+    public class PrestamoController : Controller
     {
         // GET: Categories
         #region Contexto
@@ -30,7 +30,7 @@ namespace PrestamoLibros.Controllers
 
         public ActionResult Index()
         {
-            return View(contexto.LIBRO.ToList());
+            return View(contexto.PRESTAMO.ToList());
         }
 
         public ActionResult Create()
@@ -39,18 +39,18 @@ namespace PrestamoLibros.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(LIBRO nuevaLibro)
+        public ActionResult Create(PRESTAMO nuevoPrestamo)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    contexto.LIBRO.Add(nuevaLibro);
+                    contexto.PRESTAMO.Add(nuevoPrestamo);
                     contexto.SaveChanges();
 
                     return RedirectToAction("Index");
                 }
-                return View(nuevaLibro);
+                return View(nuevoPrestamo);
             }
             catch
             {
@@ -63,27 +63,27 @@ namespace PrestamoLibros.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            LIBRO LibroEditar = contexto.LIBRO.Find(id);
+            PRESTAMO PrestamoEditar = contexto.PRESTAMO.Find(id);
 
-            if (LibroEditar == null)
+            if (PrestamoEditar == null)
                 return HttpNotFound();
 
-            return View(LibroEditar);
+            return View(PrestamoEditar);
         }
 
         [HttpPost]
-        public ActionResult Edit(LIBRO LibroEditar)
+        public ActionResult Edit(PRESTAMO PrestamoEditar)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    contexto.Entry(LibroEditar).State = EntityState.Modified;
+                    contexto.Entry(PrestamoEditar).State = EntityState.Modified;
                     contexto.SaveChanges();
 
                     return RedirectToAction("Index");
                 }
-                return View(LibroEditar);
+                return View(PrestamoEditar);
             }
             catch
             {
@@ -97,36 +97,36 @@ namespace PrestamoLibros.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            LIBRO LibroEliminar = contexto.LIBRO.Find(id);
+            PRESTAMO PrestamoEliminar = contexto.PRESTAMO.Find(id);
 
-            if (LibroEliminar == null)
+            if (PrestamoEliminar == null)
                 return HttpNotFound();
 
-            return View(LibroEliminar);
+            return View(PrestamoEliminar);
         }
 
         [HttpPost]
-        public ActionResult Delete(int? id, LIBRO Libro1)
+        public ActionResult Delete(int? id, PRESTAMO Prestamo1)
         {
             try
             {
-                LIBRO LibroEliminar = new LIBRO();
+                PRESTAMO PrestamoEliminar = new PRESTAMO();
                 if (ModelState.IsValid)
                 {
                     if (id == null)
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-                    LibroEliminar = contexto.LIBRO.Find(id);
+                    PrestamoEliminar = contexto.PRESTAMO.Find(id);
 
-                    if (LibroEliminar == null)
+                    if (PrestamoEliminar == null)
                         return HttpNotFound();
 
-                    contexto.LIBRO.Remove(LibroEliminar);
+                    contexto.PRESTAMO.Remove(PrestamoEliminar);
                     contexto.SaveChanges();
 
                     return RedirectToAction("Index");
                 }
-                return View(LibroEliminar);
+                return View(PrestamoEliminar);
             }
             catch
             {
